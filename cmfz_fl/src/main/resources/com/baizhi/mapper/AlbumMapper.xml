@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AlbumDao">
+    <!--  总行数  -->
+    <select id="selectAlbumCount" resultType="int">
+        select count(*) from c_album
+    </select>
+<!--    当前页行数-->
+    <select id="selectAlbumByPage" resultType="com.baizhi.entity.Album">
+        select album_id id,title,cover,count,score,author,broadcast,brief,publish_time publishTime from c_album
+        limit ${(curPage-1)*pageSize},#{pageSize}
+    </select>
+    <!--    增-->
+    <insert id="insertOneAlbum" parameterType="com.baizhi.entity.Album">
+        insert into c_album values(#{id},#{title},#{cover},#{count},#{score},#{author},#{broadcast},#{brief},#{publishTime})
+    </insert>
+    <!--    删-->
+    <delete id="deleteAlbumById">
+        delete from c_album where album_id=#{id}
+    </delete>
+    <!--    改-->
+    <update id="updateOneAlbum" parameterType="com.baizhi.entity.Album">
+        update c_album set title=#{title},count=#{count},score=#{score},author=#{author},
+        broadcast=#{broadcast},brief=#{brief},publish_time=#{publishTime} where album_id=#{id}
+    </update>
+    <!--  修改文件路径  -->
+    <update id="updateFilePath" parameterType="com.baizhi.entity.Album">
+        update c_album set cover=#{cover} where album_id=#{id}
+    </update>
+</mapper>

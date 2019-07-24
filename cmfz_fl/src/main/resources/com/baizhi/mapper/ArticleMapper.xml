@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ArticleDao">
+
+<!--  总行数  -->
+    <select id="selectArticleCount" resultType="int">
+        select count(*) from c_article
+    </select>
+    <!--  当前页数具行  -->
+    <select id="selectArticleByPage" resultType="com.baizhi.entity.Article">
+        select article_id id,guru_id guruId,title,content,publish_time publishTime from c_article
+        limit ${(curPage-1)*pageSize},#{pageSize}
+    </select>
+<!--    增-->
+    <insert id="insertOneArticle" parameterType="com.baizhi.entity.Article">
+        insert into c_article values(#{id},#{guruId},#{title},#{content},#{publishTime})
+    </insert>
+<!--    删-->
+    <delete id="deleteArticleById">
+        delete from c_article where article_id=#{id}
+    </delete>
+<!--    改-->
+    <update id="updateOneArticle" parameterType="com.baizhi.entity.Article">
+        update c_article set title=#{title},content=#{content},publish_time=#{publishTime} where article_id=#{id}
+    </update>
+<!--查询一个文章-->
+    <select id="selectOneArt" resultType="com.baizhi.entity.Article">
+        select article_id id,guru_id guruId,title,content,publish_time publishTime from c_article where article_id=#{id}
+    </select>
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.CarouselDao">
+ <select id="selectAll" resultType="com.baizhi.entity.Carousel">
+     select carousel_id id,title,imgPath,status,create_time createTime from c_carousel
+ </select>
+<!--  总行数  -->
+    <select id="selectCount" resultType="int">
+        select count(*) from c_carousel
+    </select>
+    <!--  当前页数具行  -->
+    <select id="selectByPage" resultType="com.baizhi.entity.Carousel">
+        select carousel_id id,title,imgPath,status,create_time createTime from c_carousel
+        limit ${(curPage-1)*pageSize},#{pageSize}
+    </select>
+<!--    增-->
+    <insert id="insertOne" parameterType="com.baizhi.entity.Carousel">
+        insert into c_carousel values(#{id},#{title},#{imgPath},#{status},#{createTime})
+    </insert>
+<!--    删-->
+    <delete id="deleteById">
+        delete from c_carousel where carousel_id=#{id}
+    </delete>
+<!--    改-->
+    <update id="updateOne" parameterType="com.baizhi.entity.Carousel">
+        update c_carousel set title=#{title},status=#{status},create_time=#{createTime} where carousel_id=#{id}
+    </update>
+<!--  修改文件路径  -->
+    <update id="updateFilePath" parameterType="com.baizhi.entity.Carousel">
+        update c_carousel set imgPath=#{imgPath} where carousel_id=#{id}
+    </update>
+</mapper>
